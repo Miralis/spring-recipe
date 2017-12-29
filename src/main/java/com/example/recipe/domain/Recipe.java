@@ -3,6 +3,7 @@ package com.example.recipe.domain;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -23,6 +24,10 @@ public class Recipe {
     private String directions;
     //TODO add
     // private Difficulty difficulty;
+
+    // mappedBy the property called "recipe"
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingedient> ingedients;
 
     // will be generated as a BLOB (binary large object) in the database
     @Lob
