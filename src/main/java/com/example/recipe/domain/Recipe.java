@@ -1,7 +1,5 @@
 package com.example.recipe.domain;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -25,7 +23,7 @@ public class Recipe {
 
     // mappedBy the property called "recipe"
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingedient> ingedients;
+    private Set<Ingredient> ingredients;
 
     // will be generated as a BLOB (binary large object) in the database
     @Lob
@@ -38,6 +36,12 @@ public class Recipe {
     // Creates the relationship for the OneToOne mapping
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
     public Long getId() {
         return id;
@@ -103,12 +107,28 @@ public class Recipe {
         this.directions = directions;
     }
 
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public Byte[] getImage() {
         return image;
     }
 
     public void setImage(Byte[] image) {
         this.image = image;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
     public Notes getNotes() {
@@ -119,19 +139,11 @@ public class Recipe {
         this.notes = notes;
     }
 
-    public Set<Ingedient> getIngedients() {
-        return ingedients;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setIngedients(Set<Ingedient> ingedients) {
-        this.ingedients = ingedients;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
