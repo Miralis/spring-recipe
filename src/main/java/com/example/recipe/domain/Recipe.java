@@ -22,8 +22,6 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    //TODO add
-    // private Difficulty difficulty;
 
     // mappedBy the property called "recipe"
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
@@ -32,6 +30,10 @@ public class Recipe {
     // will be generated as a BLOB (binary large object) in the database
     @Lob
     private Byte[] image;
+
+    // EnumType.Ordinal is the default, it would number the values (so HARD would be 3 for example)
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
 
     // Creates the relationship for the OneToOne mapping
     @OneToOne(cascade = CascadeType.ALL)
@@ -115,5 +117,21 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Set<Ingedient> getIngedients() {
+        return ingedients;
+    }
+
+    public void setIngedients(Set<Ingedient> ingedients) {
+        this.ingedients = ingedients;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 }
